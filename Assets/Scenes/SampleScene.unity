@@ -1606,7 +1606,7 @@ MonoBehaviour:
   m_Follow: {fileID: 802139553}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 15
+    OrthographicSize: 10
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -2485,7 +2485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8ae9612a56325e41a29d49b32f463ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 10
   rotateSpeed: 100
   boostSpeed: 10
   boostDuration: 3
@@ -2501,7 +2501,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4279822bc5ec72c4db373e7be9aead7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyDelay: 0.5
   pickupColor: {r: 0, g: 1, b: 0, a: 1}
   deliveryColor: {r: 0, g: 0, b: 1, a: 1}
 --- !u!1 &809021042
@@ -2661,7 +2660,7 @@ Transform:
   m_GameObject: {fileID: 820296647}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10.551965, y: -8.095507, z: 0}
+  m_LocalPosition: {x: -10.7, y: -7.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3255,7 +3254,7 @@ Transform:
   m_GameObject: {fileID: 1153723608}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 32.348034, y: -13.195507, z: 0}
+  m_LocalPosition: {x: 31, y: -8.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3540,7 +3539,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 15
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -4655,7 +4654,7 @@ Transform:
   m_GameObject: {fileID: 1668438932}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11.548036, y: -32.79551, z: 0}
+  m_LocalPosition: {x: 11.1, y: -32.79551, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

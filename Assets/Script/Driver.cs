@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Driver : MonoBehaviour
 {
-    [SerializeField] float moveSpeed = 5f;
+    [SerializeField] float moveSpeed = 6f;
     [SerializeField] float rotateSpeed = 100f;
-    [SerializeField] float boostSpeed = 10f;
-    [SerializeField] float boostDuration = 3f;  
+    [SerializeField] float boostSpeed = 4f;
+    [SerializeField] float boostDuration = 2f;  
 
     private bool isBoosted = false;
     private float boostTimer = 0f;  

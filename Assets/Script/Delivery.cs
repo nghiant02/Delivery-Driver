@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Delivery : MonoBehaviour
 {
     bool hasPackage = false;
-    [SerializeField] float destroyDelay;
+    //[SerializeField] float destroyDelay;
     [SerializeField] Color pickupColor = Color.green;   
     [SerializeField] Color deliveryColor = Color.blue;
 
@@ -18,6 +19,7 @@ public class Delivery : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        SceneManager.LoadScene(0);
         Debug.Log("Boom!!!");
     }
 
@@ -28,7 +30,7 @@ public class Delivery : MonoBehaviour
             hasPackage = true;
             Debug.Log("Package pick up");
 
-            Destroy(collision.gameObject, destroyDelay);
+            Destroy(collision.gameObject);
 
             carRenderer.color = pickupColor;
         }
