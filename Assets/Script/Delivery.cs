@@ -1,46 +1,67 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Delivery : MonoBehaviour
 {
-    bool hasPackage = false;
-    //[SerializeField] float destroyDelay;
-    [SerializeField] Color pickupColor = Color.green;   
-    [SerializeField] Color deliveryColor = Color.blue;
-
+    [SerializeField] Color pickupColor = Color.green;
+    private Color deliveryColor;
     private SpriteRenderer carRenderer;
+    private bool hasPackage = false;
 
     void Start()
     {
         carRenderer = GetComponent<SpriteRenderer>();
+        deliveryColor = carRenderer.color;
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        SceneManager.LoadScene(0);
+        HandleCollision();
         Debug.Log("Boom!!!");
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Package" && hasPackage == false)
+        if (collision.CompareTag("Package") && !hasPackage)
         {
-            hasPackage = true;
-            Debug.Log("Package pick up");
-
-            Destroy(collision.gameObject);
-
-            carRenderer.color = pickupColor;
+            PickUpPackage(collision.gameObject);
         }
 
-        if (collision.tag == "Customer" && hasPackage == true)
+        if (collision.CompareTag("Customer") && hasPackage)
         {
-            hasPackage = false;
-            Debug.Log("Package is delivered");
-
-            carRenderer.color = deliveryColor;
+            DeliverPackage();
         }
+    }
+
+    void HandleCollision()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    void PickUpPackage(GameObject package)
+    {
+        hasPackage = true;
+        Debug.Log("Package picked up");
+
+        Destroy(package);
+        SetCarColor(pickupColor);
+    }
+
+    void DeliverPackage()
+    {
+        hasPackage = false;
+        Debug.Log("Package is delivered");
+
+        ResetCarColor();
+    }
+
+    void SetCarColor(Color color)
+    {
+        carRenderer.color = color;
+    }
+
+    void ResetCarColor()
+    {
+        carRenderer.color = deliveryColor;
     }
 }

@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Package
+  - SpeedUp
+  - Customer
+  - SlowDown
   layers:
   - Default
   - TransparentFX

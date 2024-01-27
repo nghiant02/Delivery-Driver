@@ -6,24 +6,15 @@ public class Driver : MonoBehaviour
 {
     [SerializeField] float moveSpeed = 6f;
     [SerializeField] float rotateSpeed = 100f;
-    [SerializeField] float boostSpeed = 4f;
-    [SerializeField] float boostDuration = 2f;  
+    [SerializeField] float boostSpeed = 8f;
+    [SerializeField] float slowSpeed = 4f;
 
     private bool isBoosted = false;
-    private float boostTimer = 0f;  
+    private bool isSlowed = false;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Update()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        UpdateBoostStatus();
-
-        float currentMoveSpeed = isBoosted ? CalculateBoostedSpeed() : moveSpeed;
+        float currentMoveSpeed = CalculateCurrentMoveSpeed();
 
         float rotateInput = Input.GetAxis("Horizontal") * rotateSpeed * Time.deltaTime;
         float moveInput = Input.GetAxis("Vertical") * currentMoveSpeed * Time.deltaTime;
@@ -32,38 +23,60 @@ public class Driver : MonoBehaviour
         transform.Translate(0, moveInput, 0);
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("SpeedUp"))
+        if (collision.CompareTag("SpeedUp") && !isBoosted)
         {
             ActivateBoost();
             Debug.Log("Boost");
             Destroy(collision.gameObject);
         }
+
+        if (collision.CompareTag("SlowDown") && !isSlowed)
+        {
+            SlowDown();
+            Debug.Log("SlowDown");
+            Destroy(collision.gameObject);
+        }
     }
 
-    float CalculateBoostedSpeed()
-    {
-        float boostedSpeed = boostSpeed * (1f + (boostTimer / boostDuration));
-        return Mathf.Min(boostedSpeed, boostSpeed * 2f);  
-    }
-
-    void ActivateBoost()
+    private void ActivateBoost()
     {
         isBoosted = true;
-        boostTimer = 0f;
+        StartCoroutine(ResetBoost());
     }
 
-    void UpdateBoostStatus()
+    private void SlowDown()
     {
-        if (isBoosted)
-        {
-            boostTimer += Time.deltaTime;
+        isSlowed = true;
+        StartCoroutine(ResetSlow());
+    }
 
-            if (boostTimer > boostDuration)
-            {
-                isBoosted = false;
-            }
+    private float CalculateCurrentMoveSpeed()
+    {
+        if (isBoosted && !isSlowed)
+        {
+            return boostSpeed;
         }
+        else if (isSlowed && !isBoosted)
+        {
+            return slowSpeed;
+        }
+        else
+        {
+            return moveSpeed;
+        }
+    }
+
+    private IEnumerator ResetBoost()
+    {
+        yield return new WaitForSeconds(4f); 
+        isBoosted = false;
+    }
+
+    private IEnumerator ResetSlow()
+    {
+        yield return new WaitForSeconds(4f); 
+        isSlowed = false;
     }
 }
