@@ -19,4 +19,4 @@ To run the game locally or contribute to the project, follow these steps:
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/your-username/DeliveryDriverGame.git
+   git clone https://github.com/nghiant02/DeliveryDriverGame.git
