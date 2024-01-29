@@ -30,8 +30,4 @@ Explore the game, enjoy the experience, and don't forget to leave feedback or co
 
 If you're interested in contributing to the project, feel free to explore the [GitHub repository](https://github.com/nghiant02/Delivery-Driver.git) for the source code.
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
 Happy gaming!
