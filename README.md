@@ -28,7 +28,7 @@ Explore the game, enjoy the experience, and don't forget to leave feedback or co
 
 ## Contributing
 
-If you're interested in contributing to the project, feel free to explore the [GitHub repository](https://github.com/your-username/DeliveryDriverGame) for the source code.
+If you're interested in contributing to the project, feel free to explore the [GitHub repository](https://github.com/nghiant02/DeliveryDriverGame) for the source code.
 
 ## License
 
