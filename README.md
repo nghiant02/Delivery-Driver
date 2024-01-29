@@ -15,8 +15,23 @@ This project is part of a tutorial series that guides you through creating five 
 
 ## Getting Started
 
-To run the game locally or contribute to the project, follow these steps:
+The game is available to play directly on itch.io! You can experience the "Delivery Driver Game" by visiting the [itch.io page](https://nghiant02.itch.io/delivery-driver-game).
 
-1. **Clone the Repository:**
-   ```bash
-   git clone https://github.com/nghiant02/DeliveryDriverGame.git
+Explore the game, enjoy the experience, and don't forget to leave feedback or comments on the itch.io page.
+
+## Game Features
+
+- [ ] Boost and slow mechanics
+- [ ] Delivery and pickup system
+- [ ] Simple 2D physics for player movement
+- [ ] Interactive objects and obstacles
+
+## Contributing
+
+If you're interested in contributing to the project, feel free to explore the [GitHub repository](https://github.com/your-username/DeliveryDriverGame) for the source code.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+Happy gaming!
