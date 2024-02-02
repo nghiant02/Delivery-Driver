@@ -16,11 +16,22 @@ public class Driver : MonoBehaviour
     {
         float currentMoveSpeed = CalculateCurrentMoveSpeed();
 
-        float rotateInput = Input.GetAxis("Horizontal") * rotateSpeed * Time.deltaTime;
+        // Get input for movement and rotation
+        float rotateInput = Input.GetAxis("Horizontal");
         float moveInput = Input.GetAxis("Vertical") * currentMoveSpeed * Time.deltaTime;
 
-        transform.Rotate(0, 0, -rotateInput);
-        transform.Translate(0, moveInput, 0);
+        // Only allow rotation if there's movement input
+        if (Mathf.Abs(moveInput) > 0)
+        {
+            float rotationAmount = rotateInput * rotateSpeed * Time.deltaTime;
+            transform.Rotate(0, 0, -rotationAmount);
+        }
+
+        // Move the car in the direction it's facing
+        if (moveInput != 0) // Checks if there's vertical input to allow movement
+        {
+            transform.Translate(Vector3.up * moveInput);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -70,13 +81,13 @@ public class Driver : MonoBehaviour
 
     private IEnumerator ResetBoost()
     {
-        yield return new WaitForSeconds(4f); 
+        yield return new WaitForSeconds(4f);
         isBoosted = false;
     }
 
     private IEnumerator ResetSlow()
     {
-        yield return new WaitForSeconds(4f); 
+        yield return new WaitForSeconds(4f);
         isSlowed = false;
     }
 }
