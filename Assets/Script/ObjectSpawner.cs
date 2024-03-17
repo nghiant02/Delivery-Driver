@@ -20,6 +20,8 @@ public class ObjectSpawner : MonoBehaviour
         Debug.Log("Package Prefab Assigned: " + (packagePrefab != null));
         Debug.Log("Speed Up Prefab Assigned: " + (speedUpPrefab != null));
         Debug.Log("Slow Down Prefab Assigned: " + (slowDownPrefab != null));
+
+
         SpawnObjectsOnRoad();
     }
 
@@ -27,6 +29,8 @@ public class ObjectSpawner : MonoBehaviour
     {
         GameObject[] roads = GameObject.FindGameObjectsWithTag(roadTag);
         Debug.Log("Roads found: " + roads.Length);
+
+        RandomObj(roads);
 
         // Spawn Packages
         SpawnObjects(packagePrefab, roads, numberOfEachType);
@@ -38,12 +42,23 @@ public class ObjectSpawner : MonoBehaviour
         SpawnObjects(slowDownPrefab, roads, numberOfEachType);
     }
 
+    void RandomObj(GameObject[] roads)
+    {
+        GameObject road = roads[Random.Range(0, roads.Length)]; // Pick a random road
+
+        packagePrefab.transform.position = RandomPositionInBounds(road);
+        speedUpPrefab.transform.position = RandomPositionInBounds(road);
+        slowDownPrefab.transform.position = RandomPositionInBounds(road);
+
+    }
+
     void SpawnObjects(GameObject prefab, GameObject[] roads, int quantity)
     {
         for (int i = 0; i < quantity; i++)
         {
             GameObject road = roads[Random.Range(0, roads.Length)]; // Pick a random road
             Vector2 spawnPosition = RandomPositionInBounds(road);
+
             GameObject newObj = Instantiate(prefab, spawnPosition, Quaternion.identity); // Create the new object
             Debug.Log("Spawned Object: " + newObj.name);
 
