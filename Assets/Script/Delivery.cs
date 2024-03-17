@@ -35,13 +35,6 @@ public class Delivery : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // Check if the collided object is tagged as "Road"
-        if (collision.gameObject.CompareTag("Road"))
-        {
-            return; // Ignore this collision and exit the method early
-        }
-
-        // Handle other collisions
         HandleCollision();
         Debug.Log("Boom!!!");
     }
