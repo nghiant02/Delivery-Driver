@@ -13,7 +13,7 @@ public class ClickSound : MonoBehaviour
     void Update()
     {
         // Check if the left mouse button was clicked
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && Input.anyKeyDown)
         {
             // Play the click sound
             audioSource.Play();
