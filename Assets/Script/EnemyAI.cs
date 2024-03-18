@@ -1,15 +1,19 @@
 using UnityEngine;
-using UnityEngine.AI; // Include this for the NavMesh components
 
 public class EnemyAI : MonoBehaviour
 {
-    public Transform player; // Assign the player's transform in the inspector
-    private NavMeshAgent agent;
+    public Transform player;
+    public float moveSpeed = 6f;
+    public float checkDistance = 1f;
+    private Rigidbody2D rb;
+
+    private float timeSinceLastDecision = 0f;
+    private float decisionInterval = 0.5f;
 
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-        if (!player) // Find the player automatically if not assigned
+        rb = GetComponent<Rigidbody2D>();
+        if (!player)
         {
             player = GameObject.FindGameObjectWithTag("Player").transform;
         }
@@ -17,22 +21,67 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        // Check if we're on the road
-        if (IsOnRoad())
+        if (Time.time - timeSinceLastDecision > decisionInterval)
         {
-            // Update the enemy's destination to be the player's position
-            agent.SetDestination(player.position);
+            MakeMovementDecision();
+            timeSinceLastDecision = Time.time;
         }
     }
 
-    bool IsOnRoad()
+    void FixedUpdate()
     {
-        // Perform a Raycast down to check if we're above a 'Road' object
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up, 0.1f);
-        if (hit.collider != null && hit.collider.CompareTag("Road"))
+        rb.velocity = transform.up * moveSpeed;
+    }
+
+    private void MakeMovementDecision()
+    {
+        if (!IsRoadAhead() || !IsOnRoad())
         {
-            return true;
+            DecideDirectionBasedOnPlayer();
         }
-        return false;
+    }
+
+    private bool IsRoadAhead()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, checkDistance);
+        return hit.collider != null && hit.collider.CompareTag("Road");
+    }
+
+    private bool IsOnRoad()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up, checkDistance);
+        return hit.collider != null && hit.collider.CompareTag("Road");
+    }
+
+    private void DecideDirectionBasedOnPlayer()
+    {
+        Vector3 directionToPlayer = player.position - transform.position;
+        float angleToPlayer = Vector2.SignedAngle(transform.up, directionToPlayer);
+
+        if (Mathf.Abs(angleToPlayer) > 90) // If the player is mostly behind the enemy
+        {
+            // Choose to turn left or right randomly if directly going towards the player isn't an option
+            float randomTurn = Random.value < 0.5f ? 90 : -90;
+            transform.Rotate(0, 0, randomTurn);
+        }
+        else
+        {
+            // Turn towards the player by determining if they are to the left or right
+            float turnDirection = angleToPlayer > 0 ? -90 : 90;
+            transform.Rotate(0, 0, turnDirection);
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("Player Loses!");
+        }
+        else if (!collision.gameObject.CompareTag("Road"))
+        {
+            // If it collides with something that's not the road, adjust direction
+            DecideDirectionBasedOnPlayer();
+        }
     }
 }
