@@ -62,7 +62,6 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode) 
     {
-        this.dataPersistenceObjects = FindAllDataPersistenceObjects();
         LoadGame();
 
         // start up the auto saving coroutine
@@ -158,6 +157,8 @@ public class DataPersistenceManager : MonoBehaviour
             dataPersistenceObj.SaveData(gameData);
         }
 
+        Debug.Log($"GameData is null: {gameData == null}");
+
         // timestamp the data so we know when it was last saved
         gameData.lastUpdated = System.DateTime.Now.ToBinary();
 
@@ -168,15 +169,6 @@ public class DataPersistenceManager : MonoBehaviour
     private void OnApplicationQuit() 
     {
         SaveGame();
-    }
-
-    private List<IDataPersistence> FindAllDataPersistenceObjects() 
-    {
-        // FindObjectsofType takes in an optional boolean to include inactive gameobjects
-        IEnumerable<IDataPersistence> dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>(true)
-            .OfType<IDataPersistence>();
-
-        return new List<IDataPersistence>(dataPersistenceObjects);
     }
 
     public bool HasGameData() 

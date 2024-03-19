@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 
 public class Delivery : MonoBehaviour
 {
-    [SerializeField] Color pickupColor = Color.green;
     [SerializeField] Sprite blurredCustomerSprite; // Assign this in the Inspector
     public TextMeshProUGUI scoreText; // Assign this in the inspector
     public TextMeshProUGUI packageText; // Assign this in the inspector
@@ -80,15 +79,7 @@ public class Delivery : MonoBehaviour
             collision.GetComponent<Collider2D>().enabled = false; // Disable the customer's collider
             ApplyBlurEffect(collision.gameObject); // Call the method to apply the blur effect
             packagesReceived--;
-            if (scoreText == null)
-            {
-                Debug.LogError("scoreText is not assigned in the Inspector!");
-            }
-            else
-            {
-                scoreText.text = string.Format("Score: {0}", score);
-                packageText.text = string.Format("Packages: {0}", packagesReceived);
-            }
+            packageText.text = string.Format("Packages: {0}", packagesReceived);
         }
     }
 
@@ -103,24 +94,13 @@ public class Delivery : MonoBehaviour
         Debug.Log("Package picked up");
 
         Destroy(package);
-        SetCarColor(pickupColor);
     }
 
     void DeliverPackage()
     {
         hasPackage = false;
+        GameEventsManager.instance.ScoreCollected();
         Debug.Log("Package is delivered");
-
-        ResetCarColor();
     }
 
-    void SetCarColor(Color color)
-    {
-        carRenderer.color = color;
-    }
-
-    void ResetCarColor()
-    {
-        carRenderer.color = deliveryColor;
-    }
 }

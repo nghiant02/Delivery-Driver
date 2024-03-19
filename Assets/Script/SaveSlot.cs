@@ -13,7 +13,6 @@ public class SaveSlot : MonoBehaviour
     [SerializeField] private GameObject noDataContent;
     [SerializeField] private GameObject hasDataContent;
     [SerializeField] private TextMeshProUGUI percentageCompleteText;
-    [SerializeField] private TextMeshProUGUI deathCountText;
 
     [Header("Clear Data Button")]
     [SerializeField] private Button clearButton;
@@ -45,8 +44,14 @@ public class SaveSlot : MonoBehaviour
             hasDataContent.SetActive(true);
             clearButton.gameObject.SetActive(true);
 
-            percentageCompleteText.text = data.GetPercentageComplete() + "% COMPLETE";
-            deathCountText.text = "DEATH COUNT: " + data.deathCount;
+            if (percentageCompleteText != null)
+            {
+                percentageCompleteText.text = data.GetPercentageComplete() + "% COMPLETE";
+            }
+            else
+            {
+                Debug.LogWarning("PercentageCompleteText is not assigned in the Inspector.", this);
+            }
         }
     }
 
